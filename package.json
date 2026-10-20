@@ -1,0 +1,9 @@
+{
+  "name": "carepath-uk-nursing-jobs-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nursing jobs portal demo with Stripe Checkout payment gate",
+  "main": "server.js",
+  "scripts": {"start": "node server.js", "dev": "node server.js"},
+  "dependencies": {"dotenv": "^16.4.7", "express": "^4.21.2", "stripe": "^17.7.0"}
+}

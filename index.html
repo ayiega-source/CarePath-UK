@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore nursing and healthcare vacancies across the UK.">
+  <title>CarePath UK | Nursing Careers</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="CarePath UK home"><span class="brand-mark">✚</span> CarePath<span>UK</span></a>
+    <nav><a href="#jobs">Find jobs</a><a href="#how">How it works</a><a href="#fee">Fees</a></nav>
+    <a class="nav-cta" href="#jobs">Browse vacancies</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> NURSING CAREERS ACROSS THE UK</div>
+        <h1>Your next nursing role<br><em>starts here.</em></h1>
+        <p>Explore nursing opportunities across England, Scotland, Wales and Northern Ireland. Find roles that match your skills and career goals.</p>
+        <a class="primary-btn" href="#jobs">Explore vacancies <span>→</span></a>
+        <div class="hero-note"><span>✓</span> Clear job details & transparent fees</div>
+      </div>
+      <div class="hero-visual">
+        <div class="visual-card main-card">
+          <div class="visual-icon">✚</div>
+          <div class="visual-label">YOUR CAREER, YOUR NEXT STEP</div>
+          <h3>Make a difference<br>every shift.</h3>
+          <div class="visual-bottom"><span class="avatar">CP</span><span>CarePath UK<br><small>Healthcare opportunities</small></span></div>
+        </div>
+        <div class="floating-pill pill-one">♡ Patient-first care</div>
+        <div class="floating-pill pill-two">✦ New opportunities</div>
+      </div>
+    </section>
+
+    <section class="search-panel" aria-label="Search nursing jobs">
+      <div class="field"><label for="keyword">Job title or keyword</label><input id="keyword" placeholder="e.g. Registered Nurse"></div>
+      <div class="field"><label for="nation">UK nation</label><select id="nation"><option value="">All UK nations</option><option>England</option><option>Scotland</option><option>Wales</option><option>Northern Ireland</option></select></div>
+      <div class="field"><label for="specialty">Specialty</label><select id="specialty"><option value="">All specialties</option><option>Adult Nursing</option><option>Mental Health</option><option>Children's Nursing</option><option>Care Home</option><option>Community Nursing</option></select></div>
+      <button id="searchBtn" class="search-btn">Search jobs <span>→</span></button>
+    </section>
+
+    <section id="jobs" class="jobs-section">
+      <div class="section-heading">
+        <div><div class="eyebrow">FIND YOUR FIT</div><h2>Featured nursing roles</h2><p>Example listings for demonstration. Replace these with verified, live vacancies.</p></div>
+        <span id="resultCount" class="result-count">6 roles</span>
+      </div>
+      <div id="jobGrid" class="job-grid"></div>
+      <p id="emptyState" class="empty-state" hidden>No roles match those filters. Try another keyword or UK nation.</p>
+    </section>
+
+    <section id="how" class="steps-section">
+      <div class="eyebrow">SIMPLE & TRANSPARENT</div><h2>How applications work</h2>
+      <div class="steps-grid">
+        <article><span class="step-num">01</span><h3>Choose a role</h3><p>Review the role, employer, location, requirements and closing date before you apply.</p></article>
+        <article><span class="step-num">02</span><h3>Review any fee</h3><p>Any platform service fee must be shown clearly before payment. It is not an employer or NHS recruitment fee.</p></article>
+        <article><span class="step-num">03</span><h3>Submit details</h3><p>After verified payment (if applicable), complete your application and receive a reference number.</p></article>
+      </div>
+    </section>
+
+    <section id="fee" class="fee-section">
+      <div><div class="eyebrow">PLEASE READ BEFORE APPLYING</div><h2>Fees should never be a surprise.</h2><p>This demo includes a configurable platform service fee. Most legitimate UK employers and NHS recruitment processes do not charge candidates simply to apply for a job. Do not charge an application fee on behalf of an employer unless you have verified legal authority and clearly disclosed the arrangement. Never describe this fee as an NHS or employer fee.</p></div>
+      <div class="fee-card"><span>Example platform service fee</span><strong id="displayFee">£5.00</strong><small>Demo amount — configure in the server environment.</small><a href="#jobs">Choose a role above ↑</a></div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#">✚ CarePath<span>UK</span></a><p>Independent demo portal. Vacancies and employers must be verified before publishing.</p><div><a href="#fee">Fee policy</a><a href="#how">How it works</a></div><small>© <span id="year"></span> CarePath UK</small></footer>
+
+  <div id="modalBackdrop" class="modal-backdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="closeModal" class="modal-close" aria-label="Close dialog">×</button>
+      <div class="modal-symbol">✚</div>
+      <div class="eyebrow">APPLICATION DETAILS</div>
+      <h2 id="modalTitle">Apply for this role</h2>
+      <p id="modalJobInfo" class="modal-job-info"></p>
+      <div class="fee-summary"><span>Platform service fee</span><strong id="modalFee">£5.00</strong></div>
+      <p class="disclosure">This is a platform fee, not an employer or NHS fee. Check the employer and role independently. Payment does not guarantee an interview or employment.</p>
+      <label class="consent"><input type="checkbox" id="feeConsent"> I have read and agree to the fee disclosure and privacy notice.</label>
+      <button id="payBtn" class="primary-btn full-width">Continue to secure payment <span>→</span></button>
+      <p id="modalError" class="error-message" role="alert"></p>
+      <small class="secure-note">Card details are handled by the payment provider, not this website.</small>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

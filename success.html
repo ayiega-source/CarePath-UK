@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Continue application | CarePath UK</title><link rel="stylesheet" href="styles.css"></head>
+<body><header class="site-header"><a class="brand" href="index.html">✚ CarePath<span>UK</span></a><a class="nav-cta" href="index.html">Back to vacancies</a></header>
+<main style="max-width:760px;margin:55px auto;padding:0 22px">
+  <div id="checking" class="job-card"><div class="eyebrow">SECURE CHECKOUT</div><h2>Verifying your payment…</h2><p class="employer">Please keep this page open while we confirm the payment with the provider.</p></div>
+  <section id="application" class="job-card" hidden>
+    <div class="eyebrow">PAYMENT CONFIRMED</div><h2 style="font-family:Manrope,sans-serif;color:#122c3a">Complete your application</h2><p id="roleInfo" class="employer"></p>
+    <form id="applicationForm" style="display:grid;gap:16px;margin-top:24px">
+      <div class="field"><label for="fullName">Full name *</label><input id="fullName" required autocomplete="name"></div>
+      <div class="field"><label for="email">Email address *</label><input id="email" type="email" required autocomplete="email"></div>
+      <div class="field"><label for="phone">Phone number</label><input id="phone" type="tel" autocomplete="tel"></div>
+      <div class="field"><label for="registrationStatus">NMC registration status *</label><select id="registrationStatus" required><option value="">Choose one</option><option>Currently registered with the NMC</option><option>NMC application in progress</option><option>Not yet registered</option><option>Other / need guidance</option></select></div>
+      <div class="field"><label for="coverNote">Supporting statement (do not include sensitive medical information)</label><textarea id="coverNote" rows="5" style="width:100%;padding:12px;border:1px solid #dce5e4;border-radius:7px;font:13px 'DM Sans',sans-serif"></textarea></div>
+      <label class="consent"><input id="privacyConsent" type="checkbox" required> I agree to the site's privacy notice and understand my application data will be handled securely.</label>
+      <button id="submitBtn" class="primary-btn" type="submit">Submit application →</button><p id="formError" class="error-message" role="alert"></p>
+    </form>
+  </section>
+  <section id="done" class="job-card" hidden><div class="eyebrow">APPLICATION RECEIVED</div><h2 style="font-family:Manrope,sans-serif;color:#122c3a">Thank you for applying.</h2><p id="doneMessage"></p><a class="primary-btn" href="index.html">Browse more roles →</a></section>
+  <section id="failed" class="job-card" hidden><div class="eyebrow">PAYMENT NOT VERIFIED</div><h2 style="font-family:Manrope,sans-serif;color:#122c3a">We couldn't verify payment.</h2><p id="failedMessage" class="employer">Please return to the portal or contact support. Do not pay again until you have checked your payment status.</p><a class="primary-btn" href="index.html">Return to vacancies →</a></section>
+</main>
+<script>
+const qs=new URLSearchParams(location.search);const sessionId=qs.get("session_id");
+const hide=id=>document.getElementById(id).hidden=true;const show=id=>document.getElementById(id).hidden=false;
+let verified=null;
+(async()=>{
+ if(!sessionId){hide("checking");show("failed");document.getElementById("failedMessage").textContent="No payment reference was found.";return;}
+ try{
+  const r=await fetch("/api/verify-payment?session_id="+encodeURIComponent(sessionId));const data=await r.json();
+  if(!r.ok||!data.paid)throw new Error(data.error||"Payment was not confirmed.");
+  verified=data;hide("checking");show("application");document.getElementById("roleInfo").textContent=data.job.title+" · "+data.job.employer+" · Payment reference: "+data.reference;
+ }catch(e){hide("checking");show("failed");document.getElementById("failedMessage").textContent=e.message;}
+})();
+document.getElementById("applicationForm").addEventListener("submit",async e=>{
+ e.preventDefault();const err=document.getElementById("formError");err.textContent="";
+ if(!document.getElementById("privacyConsent").checked){err.textContent="Please accept the privacy notice.";return;}
+ const button=document.getElementById("submitBtn");button.disabled=true;button.textContent="Submitting…";
+ const body={sessionId,fullName:document.getElementById("fullName").value.trim(),email:document.getElementById("email").value.trim(),phone:document.getElementById("phone").value.trim(),registrationStatus:document.getElementById("registrationStatus").value,coverNote:document.getElementById("coverNote").value.trim()};
+ try{const r=await fetch("/api/applications",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const data=await r.json();if(!r.ok)throw new Error(data.error||"Submission failed.");hide("application");show("done");document.getElementById("doneMessage").textContent=data.message+" Reference: "+data.reference;}
+ catch(e){err.textContent=e.message;button.disabled=false;button.textContent="Submit application →";}
+});
+</script></body></html>
